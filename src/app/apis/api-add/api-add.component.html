@@ -1,0 +1,48 @@
+<mk-box [isRemovable]="false" [isCollapsable]="false" [isLoading]="loading" boxColor="danger">
+  <mk-box-header>Create API</mk-box-header>
+  <mk-box-content>
+    <form [formGroup]="apiForm" novalidate>
+      <div class="form-group">
+        <label class="col-md-4">Name</label>
+        <input type="text" class="form-control" formControlName="name" #name />
+        <div *ngIf="apiForm.controls['name'].invalid && (apiForm.controls['name'].dirty || apiForm.controls['name'].touched)" class="error-message">
+            <div *ngIf="apiForm.controls['name'].errors.required">
+              API name is required.
+            </div>
+          </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Description</label>
+        <textarea class="form-control" rows="3" formControlName="description" #description></textarea>
+      </div>
+      <div class="form-group">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" formControlName="active" #active /> Active
+          </label>
+        </div>
+      </div>
+
+      <app-endpoint (saveEvent)="saveEndpointsEvent($event)"></app-endpoint>
+
+      <br/>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-2 pull-right">
+            <button type="submit" 
+            (click)="addAPI()"
+            [disabled]="(apiForm.pristine || apiForm.invalid)" 
+            class="btn btn-block btn-primary">Add API</button>
+          </div>
+          <div class="col-md-2">
+            <button
+            [routerLink]="['/api']"
+            class="btn btn-block btn-danger">
+            Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mk-box-content>
+</mk-box>

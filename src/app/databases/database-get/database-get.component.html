@@ -1,0 +1,26 @@
+<mk-box [isLoading]="loading" [isRemovable]="false" [isCollapsable]="false" boxColor="danger">
+  <mk-box-header>Databases</mk-box-header>
+  <mk-box-tools>
+    <button class="btn btn-block btn-sm btn-danger" [routerLink]="['/database/create']">
+      <i class="fa fa-plus"></i>&nbsp;<i class="fa fa-database"></i>
+    </button>
+  </mk-box-tools>
+  <mk-box-content>
+    <div *ngIf="!databases.length" class="callout callout-info margin">
+      <h4>No registered database!</h4>
+    </div>
+    <table *ngIf="databases.length" class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th style="width:10%;">Actions</th>
+      </tr>
+      <tr *ngFor="let database of databases">
+        <td>{{ database.name }}</td>
+        <td>
+          <a [routerLink]="['/edit', database._id]" class="btn btn-table btn-primary" style="margin-right: 5px;"><i class="fa fa-edit"></i></a>
+          <a (click)="deleteDatabase(database._id)" class="btn btn-table btn-danger"><i class="fa fa-trash"></i></a>
+        </td>
+      </tr>
+    </table>
+  </mk-box-content>
+</mk-box>

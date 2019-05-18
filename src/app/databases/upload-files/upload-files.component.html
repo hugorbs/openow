@@ -1,0 +1,24 @@
+<mk-box [isRemovable]="false" [isCollapsable]="false" [isLoading]="loading">
+  <mk-box-header>Upload File</mk-box-header>
+  <mk-box-tools>
+    <label class="file-upload-container btn btn-sm btn-block btn-primary">
+      <span>Select file</span>
+      <input #fileInput
+             type="file"
+             name="file"
+             (change)="processFile(fileInput)">
+    </label>
+  </mk-box-tools>
+  <mk-box-content>
+    <div *ngIf="headers">
+      <table class="table table-striped">
+          <tr>
+            <th>name</th>
+          </tr>
+          <tr *ngFor="let header of headers">
+            <td>{{header}}</td>
+          </tr>
+      </table>
+    </div>
+  </mk-box-content>
+</mk-box>

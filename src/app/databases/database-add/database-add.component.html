@@ -1,0 +1,35 @@
+<mk-box [isRemovable]="false" [isCollapsable]="false" [isLoading]="loading" boxColor="danger">
+  <mk-box-header>Create Database</mk-box-header>
+  <mk-box-content>
+    <form [formGroup]="databaseForm" novalidate>
+      <div class="form-group">
+        <label class="col-md-4">Name</label>
+        <input type="text" class="form-control" formControlName="name" #name />
+        <div *ngIf="databaseForm.controls['name'].invalid && (databaseForm.controls['name'].dirty || databaseForm.controls['name'].touched)" class="error-message">
+            <div *ngIf="databaseForm.controls['name'].errors.required">
+              Database name is required.
+            </div>
+          </div>
+      </div>
+      <app-upload-files (headersEvent)="headersEvent($event)" (selectedFileEvent)="selectedFileEvent($event)"></app-upload-files>
+      <br/>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-2 pull-right">
+            <button type="submit" 
+            (click)="addDatabase()"
+            [disabled]="(databaseForm.pristine || databaseForm.invalid || !file)" 
+            class="btn btn-block btn-primary">Add Database</button>
+          </div>
+          <div class="col-md-2">
+            <button
+            [routerLink]="['/database']"
+            class="btn btn-block btn-danger">
+            Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mk-box-content>
+</mk-box>
