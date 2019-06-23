@@ -11,6 +11,10 @@
             </div>
           </div>
       </div>
+      <div class="form-group">
+        <label class="col-md-4">Description</label>
+        <input type="text" class="form-control" formControlName="description" #description />
+      </div>
       <app-upload-files (headersEvent)="headersEvent($event)" (selectedFileEvent)="selectedFileEvent($event)"></app-upload-files>
       <br/>
       <div class="form-group">

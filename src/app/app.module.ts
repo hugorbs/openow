@@ -22,6 +22,7 @@ import { ApiAddComponent } from './apis/api-add/api-add.component';
 import { ApiEditComponent } from './apis/api-edit/api-edit.component';
 import { ApiService } from './services/api.service';
 import { EndpointComponent } from './apis/endpoint/endpoint.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { EndpointComponent } from './apis/endpoint/endpoint.component';
     ApiGetComponent,
     ApiAddComponent,
     ApiEditComponent,
-    EndpointComponent
+    EndpointComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

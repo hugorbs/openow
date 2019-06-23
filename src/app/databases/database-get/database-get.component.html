@@ -12,12 +12,14 @@
     <table *ngIf="databases.length" class="table table-striped">
       <tr>
         <th>Name</th>
+        <th>Description</th>
         <th style="width:10%;">Actions</th>
       </tr>
       <tr *ngFor="let database of databases">
         <td>{{ database.name }}</td>
+        <td>{{ database.description }}</td>
         <td>
-          <a [routerLink]="['/edit', database._id]" class="btn btn-table btn-primary" style="margin-right: 5px;"><i class="fa fa-edit"></i></a>
+          <!--<a [routerLink]="['/edit', database._id]" class="btn btn-table btn-primary" style="margin-right: 5px;"><i class="fa fa-edit"></i></a>-->
           <a (click)="deleteDatabase(database._id)" class="btn btn-table btn-danger"><i class="fa fa-trash"></i></a>
         </td>
       </tr>

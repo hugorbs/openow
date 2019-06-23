@@ -7,8 +7,14 @@ import { DatabaseAddComponent } from './databases/database-add/database-add.comp
 import { ApiGetComponent } from './apis/api-get/api-get.component';
 import { ApiAddComponent } from './apis/api-add/api-add.component';
 import { ApiEditComponent } from './apis/api-edit/api-edit.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
+  { 
+    path: '', 
+    redirectTo: '/dashboard', 
+    pathMatch: 'full' 
+  },
   {
     path: 'database/create',
     component: DatabaseAddComponent
@@ -32,6 +38,10 @@ const routes: Routes = [
   {
     path: 'api/edit/:id',
     component: ApiEditComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   }
 ];
 

@@ -34,30 +34,6 @@ uploadRoutes.post('/save', upload.fields([{
     .catch(err => {
         res.status(400).send("unable to save");
     });
-    /*var bulk = dynamicModel.collection.initializeOrderedBulkOp(),
-    counter = 0;
-
-    result.data.forEach(function(doc) {
-        //console.log(doc);
-        bulk.insert(doc);
-
-        counter++;
-        if (counter % 500 == 0) {
-            console.log('bulk execute');
-            bulk.execute(function(err, r) {
-            // do something with the result
-            bulk = dynamicModel.collection.initializeOrderedBulkOp();
-            counter = 0;
-            });config = require('./DB')
-        }
-    });
-
-    // Catch any docs in the queue under or over the 500's
-    if (counter > 0) {
-        bulk.execute(function(err,result) {
-        // do something with the result here
-        });
-    }*/
 });
 
 mountSchema = function(headers) {

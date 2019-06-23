@@ -12,12 +12,14 @@
     <table *ngIf="apis.length" class="table table-striped">
       <tr>
         <th>Name</th>
+        <th>Description</th>
         <th style="width:10%;">Actions</th>
       </tr>
       <tr *ngFor="let api of apis">
         <td>{{ api.name }}</td>
+        <td>{{ api.description }}</td>
         <td>
-          <a [routerLink]="['/edit', api._id]" class="btn btn-table btn-primary" style="margin-right: 5px;"><i class="fa fa-edit"></i></a>
+          <!--<a [routerLink]="['/edit', api._id]" class="btn btn-table btn-primary" style="margin-right: 5px;"><i class="fa fa-edit"></i></a>-->
           <a (click)="deleteAPI(api._id)" class="btn btn-table btn-danger"><i class="fa fa-trash"></i></a>
         </td>
       </tr>

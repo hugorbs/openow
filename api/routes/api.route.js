@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const apiRoutes = express.Router();
 const mongoose = require('../mongoose.js');
-
+const parser = require('../parser/parser.js');
 let API = require('../models/api');
 
 apiRoutes.route('/add').post(function (req, res) {
@@ -15,6 +15,12 @@ apiRoutes.route('/add').post(function (req, res) {
         res.status(400).send("unable to save");
         });
 });
+
+apiRoutes.route('/evaluate').post(function (req, res) {
+  const param = req.body.parameter;
+  console.log(parser);
+  res.status(200).json(parser.evaluate(param));
+}); 
 
 apiRoutes.route('/').get(function (req, res) {
     API.find(function (err, apis){

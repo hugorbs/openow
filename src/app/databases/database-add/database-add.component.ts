@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { UploadService } from 'src/app/services/upload.service';
 import { finalize } from 'rxjs/operators';
+import * as s from 'underscore.string';
+
+//var s = require("underscore.string");
 
 @Component({
   selector: 'app-database-add',
@@ -36,13 +39,17 @@ export class DatabaseAddComponent implements OnInit {
 
   createForm() {
     this.databaseForm = this.fb.group({
-      name: ['', Validators.required ]
+      name: ['', Validators.required ],
+      description: ['']
     });
   }
 
   addDatabase() {
     this.loading = true;
     this.database.name = this.databaseForm.get('name').value;
+    this.database.description = this.databaseForm.get('description').value;
+    //this.database.key = s.underscored(this.database.name);
+    console.log(this.database);
     this.uploadService.saveDatabase(this.database, this.file)
     .pipe(finalize(() => this.loading = false))
     .subscribe(
@@ -53,15 +60,6 @@ export class DatabaseAddComponent implements OnInit {
         this.toastr.error('Add database failed!', 'Error!');
       }
     );
-    /*this.ds.addDatabase(this.database)
-    .subscribe(
-      (response) => {
-        this.toastr.success('Database created Succesfuly!', 'Success!');
-        this.router.navigate(['/database']);
-      }, err => {
-        this.toastr.error('Add database failed!', 'Error!');
-      }
-    );*/
   }
 
   headersEvent(headers: string[]) {

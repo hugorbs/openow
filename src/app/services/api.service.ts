@@ -12,6 +12,10 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  evaluate(param: string) {
+    return this.http.post(`${this.uri}/evaluate`, {parameter: param});
+  }
+
   addAPI(obj: API): Observable<any> {
     return this.http.post(`${this.uri}/add`, obj);
   }

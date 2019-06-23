@@ -2,6 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import Endpoint from 'src/app/models/endpoint';
 import { DatabaseService } from 'src/app/services/database.service';
 import Database from 'src/app/models/database';
+import { ApiService } from 'src/app/services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-endpoint',
@@ -12,10 +14,12 @@ export class EndpointComponent implements OnInit {
 
   endpoints: Endpoint[] = [];
   databases: Database[] = [];
+  operators: string[] = ['&&']
 
   newEndpoint: Endpoint;
   selectedDatabase: Database = null;
   selectedField: string = '';
+  selectedOperator: string = '';
 
   @Output() saveEvent = new EventEmitter();
   
@@ -23,9 +27,14 @@ export class EndpointComponent implements OnInit {
   listing = true;
   creating = false;
 
-  constructor(private ds: DatabaseService) { }
+  constructor(
+    private ds: DatabaseService, 
+    private apiService: ApiService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit() {
+    this.selectedOperator = this.operators[0];
   }
 
   onChangeDatabase(database) {
@@ -34,6 +43,10 @@ export class EndpointComponent implements OnInit {
 
   onChangeField(field) {
     this.selectedField = field;
+  }
+
+  onChangeOperator(operator) {
+    this.selectedOperator = operator;
   }
 
   createEndpoint() {
@@ -74,5 +87,22 @@ export class EndpointComponent implements OnInit {
 
   insertField() {
     this.newEndpoint.formula += this.selectedDatabase.name + '.' + this.selectedField;
+  }
+
+  insertOperator() {
+    this.newEndpoint.formula += this.selectedOperator;
+  }
+
+  checkSyntax() {
+    this.apiService.evaluate(this.newEndpoint.formula).subscribe(
+      (result) => {
+        console.log(result);
+        if(result) {
+          this.toastr.success('Correct syntax!', 'Success!');
+        } else {
+          this.toastr.error('Incorrect syntax!', 'Error!');
+        }
+      }
+    );
   }
 }
