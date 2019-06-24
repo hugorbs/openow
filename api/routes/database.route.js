@@ -32,7 +32,7 @@ databaseRoutes.route('/delete/:id').get(function (req, res) {
       if(err) {
         res.json(err);
       } else {
-        mongoose.connection.db.dropCollection(database.name, function (error, result) {
+        mongoose.connection.db.dropCollection('db-' + database.name, function (error, result) {
           if (error) {
               console.log("error delete collection");
               res.json(error);

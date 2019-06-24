@@ -3,12 +3,29 @@ const app = express();
 const multer = require('multer');
 const upload = multer();
 const uploadRoutes = express.Router();
-const fileReader = require('../file-readers/file-reader-csv');
+
+const parserCSV = require('../file-readers/file-reader-csv');
+const parserXML = require('../file-readers/file-reader-xml');
+
 let Database = require('../models/database');;
 
 uploadRoutes.post('/headers', upload.single('file'), function (req, res, next) {
-    const result = fileReader.getHeaders(req.file.buffer.toString());
-    res.status(200).json(result.data[0]);
+    const content = req.file.buffer.toString();
+
+    var result = {};
+
+    switch (req.file.mimetype) {
+        case 'text/csv':
+            result = parserCSV.getHeaders(content);
+            res.status(200).json(result.data[0]);
+        break;
+        case 'text/xml':
+            result = parserXML.getHeaders(content);
+            res.status(200).json(result);
+        break;
+        default: 
+            res.status(500).send();
+    }
 });
 
 uploadRoutes.post('/save', upload.fields([{
@@ -20,15 +37,21 @@ uploadRoutes.post('/save', upload.fields([{
     let database = new Database(JSON.parse(req.files.obj[0].buffer.toString()));
     database.save();
 
-    console.log('obj inserted');
+    let result = {};
 
-    const result = fileReader.getRows(req.files.file[0].buffer.toString());
-
-    console.log('parser done');
+    switch (req.files.file[0].mimetype) {
+        case 'text/csv':
+            result = parserCSV.getRows(req.files.file[0].buffer.toString());
+            result = result.data;
+        break;
+        case 'text/xml':
+            result = parserXML.getRows(req.files.file[0].buffer.toString());
+        break;
+    }
 
     const dynamicModel = require('../models/dynamic-model')(database.name, mountSchema(database.columns));
 
-    dynamicModel.insertMany(result.data).then(database => {
+    dynamicModel.insertMany(result).then(database => {
         res.status(200).json({'database': 'database added successfully'});
     })
     .catch(err => {

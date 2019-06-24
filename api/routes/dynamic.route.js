@@ -6,6 +6,13 @@ let API = require('../models/api');
 let Database = require('../models/database');
 const mongoose = require('../mongoose.js');
 
+dynamicRoutes.route('/').get(function (req, res) {
+    API.find({}, { '_id': 0, 'endpoints._id': 0, 'endpoints.formula': 0, '__v': 0}, function(err1, res1) {
+        return res.send(res1);
+    });
+});
+
+
 dynamicRoutes.route('/:api').get(function (req, res) {
     const apiName = req.params.api;
 

@@ -58,6 +58,7 @@ export class UploadFilesComponent implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         (res) => {
+          console.log(res);
           this.headers = res;
           this.headersEvent.emit(this.headers);
           this.onSuccess();

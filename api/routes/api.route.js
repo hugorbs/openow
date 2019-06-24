@@ -18,7 +18,6 @@ apiRoutes.route('/add').post(function (req, res) {
 
 apiRoutes.route('/evaluate').post(function (req, res) {
   const param = req.body.parameter;
-  console.log(parser);
   res.status(200).json(parser.evaluate(param));
 }); 
 
